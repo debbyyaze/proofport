@@ -14,7 +14,7 @@ import { getCeloChainLabel, publicEnv } from "@/lib/env";
 export const metadata: Metadata = {
   other: {
     "talentapp:project_verification":
-      "3f642a3eacac897ca07aa799b8c30c3ed46f518277484af7354397eed6cde2b2be243ae3081039beebe01fe1d752a0f294b50bc2e4bda82dab5c3730ba24a563"
+      "642850b959bcb0dc353caa3757fff7dd8827558756deeb9f993428f4159b23e0fff0f77de5b7cf95e9072a3bde82509c8fe8176fa36832c5071c7d155b1d1298"
   }
 };
 
