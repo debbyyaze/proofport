@@ -11,7 +11,6 @@ describe("ProofPortLog", function () {
     const [author, applauder, otherAuthor] = await ethers.getSigners();
     const ProofPortLog = await ethers.getContractFactory("ProofPortLog");
     // Hardhat generates runtime contract methods after compile; typechain is not used in this small app.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const proofPort = (await ProofPortLog.deploy()) as any;
     await proofPort.waitForDeployment();
 

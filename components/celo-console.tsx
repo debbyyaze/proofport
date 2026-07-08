@@ -290,8 +290,12 @@ export function CeloConsole() {
   );
 
   useEffect(() => {
-    void refreshWallet();
-    void loadLogs();
+    const refreshId = window.setTimeout(() => {
+      void refreshWallet();
+      void loadLogs();
+    }, 0);
+
+    return () => window.clearTimeout(refreshId);
   }, [loadLogs, refreshWallet]);
 
   return (

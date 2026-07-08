@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,6 +10,13 @@ import {
   WalletCards
 } from "lucide-react";
 import { getCeloChainLabel, publicEnv } from "@/lib/env";
+
+export const metadata: Metadata = {
+  other: {
+    "talentapp:project_verification":
+      "3f642a3eacac897ca07aa799b8c30c3ed46f518277484af7354397eed6cde2b2be243ae3081039beebe01fe1d752a0f294b50bc2e4bda82dab5c3730ba24a563"
+  }
+};
 
 export default function HomePage() {
   const stacksNetworkLabel =

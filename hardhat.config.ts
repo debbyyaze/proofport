@@ -6,7 +6,13 @@ import hardhatVerifyPlugin from "@nomicfoundation/hardhat-verify";
 import { defineConfig } from "hardhat/config";
 import { serverEnv } from "./lib/server-env";
 
-const accounts = serverEnv.privateKey ? [serverEnv.privateKey] : undefined;
+function isPrivateKey(value: string) {
+  return /^0x[0-9a-fA-F]{64}$/.test(value);
+}
+
+const accounts = isPrivateKey(serverEnv.privateKey)
+  ? [serverEnv.privateKey]
+  : undefined;
 const verificationApiKey =
   serverEnv.etherscanApiKey || serverEnv.celoscanApiKey || "";
 

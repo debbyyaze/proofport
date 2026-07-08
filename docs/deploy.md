@@ -1,116 +1,99 @@
 # Deploy ProofPort
 
-## Celo
-
-1. Install and verify locally:
+Use Node `22.13.0` or newer before running Hardhat or Next:
 
 ```bash
+nvm install 22.13.0
+nvm use 22.13.0
+node -v
 npm install
-npm run compile:celo
-npm run test:celo
-```
-
-2. Deploy to Celo Sepolia:
-
-```bash
 cp .env.example .env
-# set PRIVATE_KEY and CELO_SEPOLIA_RPC_URL
-npm run deploy:celo:sepolia
 ```
 
-3. Copy the printed address, deployment transaction hash, and deployment block into your launch notes. Set:
+## Celo Mainnet
+
+1. Set these values in `.env`:
 
 ```bash
-NEXT_PUBLIC_CELO_NETWORK=celoSepolia
-NEXT_PUBLIC_CELO_CONTRACT_ADDRESS=<address>
-NEXT_PUBLIC_CELO_DEPLOYMENT_BLOCK=<block>
-PROOFPORT_CELO_CONTRACT_ADDRESS_SEPOLIA=<address>
+PRIVATE_KEY=0x<your-celo-deployer-private-key>
+CELO_MAINNET_RPC_URL=https://forno.celo.org
+NEXT_PUBLIC_CELO_NETWORK=celo
 ```
 
-4. Mainnet deploy for production:
+2. Compile and deploy:
 
 ```bash
-# set PRIVATE_KEY, CELO_MAINNET_RPC_URL, and enough CELO for gas
+npm run compile:celo
 npm run deploy:celo:mainnet
 ```
 
-5. For production set:
+3. Copy the printed contract address, deployment transaction hash, deployment block, and explorer URL. Set:
 
 ```bash
-NEXT_PUBLIC_CELO_NETWORK=celo
 NEXT_PUBLIC_CELO_CONTRACT_ADDRESS=<mainnet-address>
 NEXT_PUBLIC_CELO_DEPLOYMENT_BLOCK=<mainnet-deploy-block>
 PROOFPORT_CELO_CONTRACT_ADDRESS_MAINNET=<mainnet-address>
 ```
 
-Optional verification:
+4. Optional verification:
 
 ```bash
+# set CELOSCAN_API_KEY or ETHERSCAN_API_KEY first
 npm run verify:celo:mainnet
 ```
 
-## Stacks
+## Stacks Mainnet
 
-1. Install Clarinet if needed:
+1. Set these values in `.env`:
 
 ```bash
-brew install clarinet
+STACKS_PRIVATE_KEY=<your-stacks-private-key>
+STACKS_NETWORK=mainnet
+STACKS_DEPLOY_FEE_MICROSTX=300000
+NEXT_PUBLIC_STACKS_NETWORK=mainnet
+NEXT_PUBLIC_STACKS_CONTRACT_NAME=proofport-log
 ```
 
-2. Validate and test:
+2. Check and deploy:
 
 ```bash
 npm run check:stacks
-npm run test:stacks
+npm run deploy:stacks:mainnet
 ```
 
-`npm run check:stacks` uses the installed Clarinet SDK, so it works without a global CLI. If you have the Clarinet CLI installed, `npm run check:stacks:clarinet` runs the native `clarinet check`.
-
-3. Deploy to testnet:
+3. Copy the printed contract id and transaction id. Set:
 
 ```bash
-# set STACKS_PRIVATE_KEY and STACKS_DEPLOY_FEE_MICROSTX
-npm run deploy:stacks:testnet
-```
-
-4. Copy the printed contract id and tx id. Set:
-
-```bash
-NEXT_PUBLIC_STACKS_NETWORK=testnet
-NEXT_PUBLIC_STACKS_CONTRACT_ADDRESS=<deployer-address>
-NEXT_PUBLIC_STACKS_CONTRACT_NAME=proofport-log
-PROOFPORT_STACKS_CONTRACT_ID_TESTNET=<deployer-address>.proofport-log
-```
-
-5. Mainnet deploy for production:
-
-```bash
-STACKS_NETWORK=mainnet npm run deploy:stacks:mainnet
-```
-
-6. For production set:
-
-```bash
-NEXT_PUBLIC_STACKS_NETWORK=mainnet
 NEXT_PUBLIC_STACKS_CONTRACT_ADDRESS=<mainnet-deployer-address>
-NEXT_PUBLIC_STACKS_CONTRACT_NAME=proofport-log
 PROOFPORT_STACKS_CONTRACT_ID_MAINNET=<mainnet-deployer-address>.proofport-log
 ```
 
-## Website
+## Vercel
 
-Deploy the Next.js app after both public contract configs are set:
+Set these production environment variables:
+
+```bash
+NEXT_PUBLIC_APP_URL=https://your-domain.example
+NEXT_PUBLIC_CELO_NETWORK=celo
+NEXT_PUBLIC_CELO_CONTRACT_ADDRESS=<mainnet-address>
+NEXT_PUBLIC_CELO_DEPLOYMENT_BLOCK=<mainnet-deploy-block>
+NEXT_PUBLIC_CELO_MAINNET_RPC_URL=https://forno.celo.org
+NEXT_PUBLIC_STACKS_NETWORK=mainnet
+NEXT_PUBLIC_STACKS_CONTRACT_ADDRESS=<mainnet-deployer-address>
+NEXT_PUBLIC_STACKS_CONTRACT_NAME=proofport-log
+NEXT_PUBLIC_STACKS_API_MAINNET=https://api.hiro.so
+```
+
+Do not put deployer private keys in Vercel for normal app hosting.
+
+## Final Checks
 
 ```bash
 npm run lint
 npm run typecheck
 npm run build
+npm test
+npm run check:stacks
 ```
 
-Keep these launch links with the production release:
-
-- Website: `https://your-domain.example`
-- Celo publishing path: `https://your-domain.example/celo`
-- Stacks publishing path: `https://your-domain.example/stacks`
-- Celo contract and first entry explorer receipt
-- Stacks contract id and first entry explorer receipt
+Create one live entry from `/celo` and one live entry from `/stacks`, then save both explorer receipts with the release notes.

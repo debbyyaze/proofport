@@ -15,6 +15,8 @@ The app has no backend, no database, and no indexer. It reads the latest entries
 Use Node `22.13.0` or newer.
 
 ```bash
+nvm install 22.13.0
+nvm use 22.13.0
 npm install
 cp .env.example .env
 npm run dev
@@ -33,7 +35,6 @@ Celo:
 ```bash
 npm run compile:celo
 npm run test:celo
-npm run deploy:celo:sepolia
 npm run deploy:celo:mainnet
 ```
 
@@ -43,7 +44,6 @@ Stacks:
 brew install clarinet
 npm run check:stacks
 npm run test:stacks
-npm run deploy:stacks:testnet
 npm run deploy:stacks:mainnet
 ```
 
